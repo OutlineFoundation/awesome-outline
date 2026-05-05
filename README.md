@@ -18,7 +18,7 @@ projects worth adapting? See [Wishlist](WISHLIST.md).
 - [Relay](#relay)
 - [Measure](#measure)
 - [Choose](#choose)
-- [Mobile Proxy Adapters](#mobile-proxy-adapters)
+- [Integrate](#integrate)
 - [Tools](#tools)
 - [Contributing](#contributing)
 
@@ -101,7 +101,6 @@ Prevents: **content-based blocking**, **domain-based blocking**, **IP-based bloc
 | Shadowsocks | 🧩 Outline | [transport/shadowsocks](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/shadowsocks) | Stream dialer, packet listener | Implements Shadowsocks secure transport and [proxy](https://shadowsocks.org/doc/what-is-shadowsocks.html) protocols. Compatible with Outline access keys through config strings. |
 | AmneziaWG | 🌐 Community | [amneziawg-go/outline](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline) / [source](https://github.com/amnezia-vpn/amneziawg-go/tree/master/outline) | Stream dialer | As a VPN strategy, the service can relay packet traffic beyond the AmneziaWG endpoint. Also addresses WireGuard fingerprinting and active probing. Backward-compatible with WireGuard. |
 | Psiphon  | 🌐 Community | [x/psiphon](https://pkg.go.dev/golang.getoutline.org/sdk/x/psiphon) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/psiphon) | Stream dialer | Uses Psiphon as a `transport.StreamDialer`. Also addresses protocol fingerprinting and active probing. Requires a Psiphon config and the `psiphon` build tag because of licensing. |
-| MobileProxy | 🧩 Outline | [x/mobileproxy](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/mobileproxy) | App integration proxy | Runs a local proxy so mobile apps can route selected traffic through Outline SDK dialers. |
 
 ## Choose
 
@@ -132,23 +131,38 @@ Prevents: **blind strategy failure** and **invisible quality degradation**
 | Connectivity Check | 🧩 Outline | [x/connectivity](https://pkg.go.dev/golang.getoutline.org/sdk/x/connectivity) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/connectivity) | Telemetry probe | Baseline library package for checking stream and datagram network reachability and generating diagnostic logs. |
 | Telemetry Reporting | 🧩 Outline | [x/report](https://pkg.go.dev/golang.getoutline.org/sdk/x/report) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/report) | Telemetry collector | Library package providing structural error, performance, and metric event logging to support data-driven selection. |
 
-## Mobile Proxy Adapters
+## Integrate
 
-MobileProxy is the easiest Outline SDK integration path for many mobile apps:
-it runs a local proxy and lets the app route selected traffic through compatible
-stream dialers or strategy selectors. This section groups adapters that are
-especially relevant to MobileProxy integrations. MobileProxy itself is listed
-under Relay, not here.
+Easily embed network resilience and censorship circumvention into existing applications without implementing custom low-level SDK engines from scratch.
 
-For extending MobileProxy with additional strategies, see the
-[MobileProxy package](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy)
-and the Outline SDK discussion on
-[registering custom strategies](https://github.com/OutlineFoundation/outline-sdk/discussions/536).
+Main interface: Local proxy listeners, pre-compiled binary framework packages, and custom streaming engine handlers.
 
-| Component | Origin | Package | Notes |
-| :-------- | :----- | :------ | :---- |
-| Psiphon [RegisterFallbackParser](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy/psiphon#RegisterFallbackParser) | 🌐 Community | [golang.getoutline.org/sdk/x/mobileproxy/psiphon](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy/psiphon) | Requires Psiphon config and the `psiphon` build tag because of licensing. |
-| AmneziaWG [RegisterFallbackParser](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline#RegisterFallbackParser) | 🌐 Community | [github.com/amnezia-vpn/amneziawg-go/outline](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline) | Requires AmneziaWG config. |
+Prevents: **high implementation barriers** and **monolithic strategy forks**
+
+### Outline MobileProxy
+Provides a local lookback proxy so mobile apps can route selected traffic through compatible SDK strategy dialers.
+
+| Component | Origin | Package / source | Role | Notes |
+| :-------- | :----- | :--------------- | :--- | :---- |
+| MobileProxy Core | 🧩 Outline | [x/mobileproxy](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/mobileproxy) | App loopback proxy API | Core package running a local loopback proxy for routing mobile client application traffic. |
+| `mobileproxylib` | 🧩 Outline | [mobileproxylib](https://github.com/OutlineFoundation/mobileproxylib) | Pre-built static library | Repository providing pre-compiled binary static/dynamic frameworks for cross-platform inclusion without native tooling builds. |
+| Psiphon Fallback Adapter | 🌐 Community | [x/mobileproxy/psiphon](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy/psiphon) | MobileProxy plugin parser | RegisterFallbackParser plugin allowing MobileProxy to parse and inject custom Psiphon configuration tags. |
+| AmneziaWG Fallback Adapter | 🌐 Community | [amneziawg-go/outline parser](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline#RegisterFallbackParser) | MobileProxy plugin parser | RegisterFallbackParser plugin allowing MobileProxy to inject and spin up AmneziaWG packet tunnels. |
+
+### IIF SmartProxy
+Separate Android resilience integration framework.
+
+| Component | Origin | Package / source | Role | Notes |
+| :-------- | :----- | :--------------- | :--- | :---- |
+| SmartProxy Library | 🌐 Community | [SmartProxy Android SDK](https://github.com/Internet-Innovations-Foundation/SmartProxy) | Integration framework | High-level `ProxyManager` wrapping Outline SDK and ByeDPI, offering pre-built media streaming extensions (ExoPlayer blocks) for fast integration. |
+
+### App Maker
+Container generators turning web properties into censorship-resistant app packages.
+
+| Component | Origin | Package / source | Role | Notes |
+| :-------- | :----- | :--------------- | :--- | :---- |
+| Outline App Maker | 🧩 Outline | [outline-app-maker](https://github.com/OutlineFoundation/outline-app-maker) | Native app wrapper package | CLI container generator wrapping websites into native iOS/Android containers utilizing MobileProxy under the hood. |
+
 
 ## Tools
 

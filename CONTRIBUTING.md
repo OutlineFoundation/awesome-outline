@@ -17,12 +17,12 @@ bars:
   compatible tools in their own right. If they point toward a future compatible
   component, add a concrete adapter, tool, or source-audit task to
   [Wishlist](WISHLIST.md).
-- **Libraries vs Tools Separation:** The capability sections (Resolve, Shape, Carry, Relay, Measure, Choose) are strictly reserved for reusable library components and API blocks. Standalone command-line binary executables, developer inspectors, or telemetry runners belong exclusively under the **Tools** section.
+- **Libraries vs Tools Separation:** The capability sections (Resolve, Shape, Carry, Relay, Measure, Choose, Integrate) are strictly reserved for reusable library components and API blocks. Standalone command-line binary executables, developer inspectors, or telemetry runners belong exclusively under the **Tools** section.
 
 ## Entry Rules
 
 - Every entry needs a source link.
-- Every entry needs a taxonomy placement: Resolve, Shape, Carry, Relay, Measure, Choose, or multiple. The bucket's `Prevents:` line carries the default threat coverage.
+- Every entry needs a taxonomy placement: Resolve, Shape, Carry, Relay, Measure, Choose, Integrate, or multiple. The bucket's `Prevents:` line carries the default threat coverage.
 - If the entry addresses threats beyond the bucket default, call them out in the Notes column using the labels below.
 - Every entry needs an interface role, such as resolver, endpoint, wrapper, proxy, selector, adapter, or tool.
 - Every entry needs an origin marker: 🧩 Outline or 🌐 Community.
@@ -38,7 +38,7 @@ A useful main-list entry should include:
 - original repository or documentation URL;
 - compatibility evidence;
 - origin: 🧩 Outline or 🌐 Community;
-- capability bucket: Resolve, Shape, Carry, Relay, Measure, Choose, or multiple;
+- capability bucket: Resolve, Shape, Carry, Relay, Measure, Choose, Integrate, or multiple;
 - role: resolver, endpoint, wrapper, proxy, selector, adapter, tool, etc.;
 - any threats addressed beyond the bucket's `Prevents:` default;
 - short caveat about server requirements, licensing, or evidence if known.
