@@ -129,9 +129,9 @@ Prevents: **blind strategy failure** and **invisible quality degradation**
 
 | Component | Origin | Package / source | Role | Notes |
 | :-------- | :----- | :--------------- | :--- | :---- |
-| SOAX proxy client | 🧩 Outline | [x/soax](https://pkg.go.dev/golang.getoutline.org/sdk/x/soax) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/soax) | Measurement adapter | Builds SOCKS5 or HTTP CONNECT proxy clients for SOAX sessions leveraging measurement-driven endpoint rotation to address reputation blocking, allowing for remote measurements across diverse networks. |
-| Outline SDK Connectivity Check Code | 🧩 Outline | [x/connectivity](https://pkg.go.dev/golang.getoutline.org/sdk/x/connectivity) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/connectivity) | Telemetry probe | Baseline library package for checking stream and datagram network reachability and generating diagnostic logs. |
-| Outline SDK Telemetry Reporting Code | 🧩 Outline | [x/report](https://pkg.go.dev/golang.getoutline.org/sdk/x/report) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/report) | Telemetry logger | Library package providing structural error, performance, and metric event logging to support data-driven selection. |
+| SOAX proxy client | 🧩 Outline | [x/soax](https://pkg.go.dev/golang.getoutline.org/sdk/x/soax) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/soax) | Proxy network client | Builds SOCKS5 or HTTP CONNECT proxy clients for SOAX sessions leveraging measurement-driven endpoint rotation to address reputation blocking, allowing for remote measurements across diverse networks. |
+| Connectivity Check | 🧩 Outline | [x/connectivity](https://pkg.go.dev/golang.getoutline.org/sdk/x/connectivity) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/connectivity) | Telemetry probe | Baseline library package for checking stream and datagram network reachability and generating diagnostic logs. |
+| Telemetry Reporting | 🧩 Outline | [x/report](https://pkg.go.dev/golang.getoutline.org/sdk/x/report) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/report) | Telemetry collector | Library package providing structural error, performance, and metric event logging to support data-driven selection. |
 
 ## Mobile Proxy Adapters
 
