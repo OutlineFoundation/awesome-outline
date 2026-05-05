@@ -62,11 +62,18 @@ Dialers.
 
 Prevents: **content-based blocking** and **domain-based blocking**
 
+### Standards-based
+
 | Component | Origin | Package / source | Role | Notes |
 | :-------- | :----- | :--------------- | :--- | :---- |
 | Direct TCP and UDP dialers | 🧩 Outline | [transport](https://pkg.go.dev/golang.getoutline.org/sdk/transport) / [stream source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/stream.go), [packet source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/packet.go) | Direct stream and packet dialers | Baseline carry primitives that other components wrap. No circumvention by themselves. |
 | TLS | 🧩 Outline | [transport/tls](https://pkg.go.dev/golang.getoutline.org/sdk/transport/tls) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/tls) | Connection wrapper, stream dialer | Wraps an inner `transport.StreamConn` with TLS. Supports SNI, ALPN, session cache, and certificate verification options for TLS-wrapped streams. |
 | WebSocket | 🧩 Outline | [x/websocket](https://pkg.go.dev/golang.getoutline.org/sdk/x/websocket) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/websocket) | Stream and packet endpoint | Carries streams or packets over WebSocket messages. Useful where only HTTP/WebSocket paths are allowed. |
+
+### Custom
+
+| Component | Origin | Package / source | Role | Notes |
+| :-------- | :----- | :--------------- | :--- | :---- |
 | Shadowsocks encryption | 🧩 Outline | [transport/shadowsocks Reader](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks#Reader), [Writer](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks#Writer) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/shadowsocks) | Encrypted stream reader/writer | `NewReader` decrypts Shadowsocks stream data and `NewWriter` encrypts stream data before it is carried over the underlying connection ([spec](https://shadowsocks.org/doc/aead.html)). |
 | LwIP to transport bridge | 🧩 Outline | [network/lwip2transport](https://pkg.go.dev/golang.getoutline.org/sdk/network/lwip2transport) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/network/lwip2transport) | IP packet bridge | Translates IP packets to TCP and UDP handlers backed by Outline transport interfaces. Useful for full-tunnel or packet strategies. |
 | AmneziaWG | 🌐 Community | [amneziawg-go/outline](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline) / [source](https://github.com/amnezia-vpn/amneziawg-go/tree/master/outline) | Packet endpoint adapter | External Outline-compatible adapter for AmneziaWG. Also addresses WireGuard fingerprinting and active probing. Also listed under Relay because VPN services can forward packet traffic beyond the endpoint. |
@@ -79,12 +86,19 @@ Usually implemented as Stream or Packet Dialers, or a Packet Listener.
 
 Prevents: **content-based blocking**, **domain-based blocking**, **IP-based blocking**
 
+### Standards-based
+
 | Component | Origin | Package / source | Role | Notes |
 | :-------- | :----- | :--------------- | :--- | :---- |
-| Shadowsocks transport and proxy | 🧩 Outline | [transport/shadowsocks](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/shadowsocks) | Stream and packet proxy protocol | Implements Shadowsocks secure transport and [proxy](https://shadowsocks.org/doc/what-is-shadowsocks.html) protocols. Compatible with Outline access keys through config strings. |
 | SOCKS5 transport | 🧩 Outline | [transport/socks5](https://pkg.go.dev/golang.getoutline.org/sdk/transport/socks5) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/socks5) | Stream and packet proxy protocol | Provides SOCKS5 dialers for relaying traffic through a SOCKS5 proxy. SOCKS5 is not camouflage by itself. |
 | HTTP CONNECT client | 🧩 Outline | [x/httpconnect](https://pkg.go.dev/golang.getoutline.org/sdk/x/httpconnect) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/httpconnect) | Stream proxy protocol | Implements HTTP CONNECT over HTTP/1.1, HTTP/2, and HTTP/3 transports. Useful where only web-style paths are allowed. |
 | HTTP proxy handlers | 🧩 Outline | [x/httpproxy](https://pkg.go.dev/golang.getoutline.org/sdk/x/httpproxy) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/httpproxy) | Local forward proxy | Routes local HTTP proxy traffic through an injected `transport.StreamDialer`. |
+
+### Custom
+
+| Component | Origin | Package / source | Role | Notes |
+| :-------- | :----- | :--------------- | :--- | :---- |
+| Shadowsocks transport and proxy | 🧩 Outline | [transport/shadowsocks](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/shadowsocks) | Stream and packet proxy protocol | Implements Shadowsocks secure transport and [proxy](https://shadowsocks.org/doc/what-is-shadowsocks.html) protocols. Compatible with Outline access keys through config strings. |
 | MobileProxy | 🧩 Outline | [x/mobileproxy](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/mobileproxy) | App integration proxy | Runs a local proxy so mobile apps can route selected traffic through Outline SDK dialers. |
 | AmneziaWG Outline adapter | 🌐 Community | [amneziawg-go/outline](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline) / [source](https://github.com/amnezia-vpn/amneziawg-go/tree/master/outline) | Packet relay adapter | Also listed under Carry. As a VPN strategy, the service can relay packet traffic beyond the AmneziaWG endpoint. Also addresses WireGuard fingerprinting and active probing. Backward-compatible with WireGuard. |
 | Psiphon StreamDialer adapter | 🌐 Community | [x/psiphon](https://pkg.go.dev/golang.getoutline.org/sdk/x/psiphon) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/psiphon) | Stream dialer adapter | Uses Psiphon as a `transport.StreamDialer`. Also addresses protocol fingerprinting and active probing. Requires a Psiphon config and the `psiphon` build tag because of licensing. |

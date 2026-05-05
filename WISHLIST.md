@@ -22,13 +22,13 @@ Wishlist inclusion is not endorsement and does not imply current Outline compati
 
 ## Carry
 
-Standards-based:
+Standard protocols:
 - WebTransport - provides multiplexed, full-duplex message streams that can leverage QUIC. Implementation
   can use [quic-go](https://quic-go.net/docs/webtransport/).
 - Pluggable TLS - to enable using any TLS library. See [discussion](https://github.com/OutlineFoundation/outline-sdk/discussions/590)
 - System TLS - expose the system TLS stack to Go, to prevent TLS fingerprinting.
 
-Alternative transports:
+Custom strategies:
 - [dnstt](https://www.bamsoftware.com/software/dnstt/) - allows communication over DNS, sometimes
   the only way out. We should make it available via its individual components (KCP, smux, resolver), not
   a monolith. See [discussion](https://github.com/OutlineFoundation/outline-sdk/discussions/574).
