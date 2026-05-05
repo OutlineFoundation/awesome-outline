@@ -34,7 +34,7 @@ Prevents: **DNS-based blocking**
 | :-------- | :----- | :--------------- | :--- | :---- |
 | Outline DNS resolvers | 🧩 Outline | [dns](https://pkg.go.dev/golang.getoutline.org/sdk/dns) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/dns) | Resolver | Provides `dns.Resolver` plus DNS-over-UDP, DNS-over-TCP, DNS-over-TLS, and DNS-over-HTTPS implementations. |
 | Resolver-backed stream dialer | 🧩 Outline | [dns.NewStreamDialer](https://pkg.go.dev/golang.getoutline.org/sdk/dns#NewStreamDialer) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/dns/stream_dialer.go) |  Stream dialer | Resolves hostnames with an injected resolver and connects with Happy Eyeballs v2 behavior. |
-| Happy Eyeballs stream dialer | 🧩 Outline | [transport.HappyEyeballsStreamDialer](https://pkg.go.dev/golang.getoutline.org/sdk/transport#HappyEyeballsStreamDialer) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/happyeyeballs.go) | Stream dialer | Races resolved addresses with Happy Eyeballs v2 behavior. |
+| Happy Eyeballs | 🧩 Outline | [transport.HappyEyeballsStreamDialer](https://pkg.go.dev/golang.getoutline.org/sdk/transport#HappyEyeballsStreamDialer) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/happyeyeballs.go) | Stream dialer | Races resolved addresses with Happy Eyeballs v2 behavior. |
 
 
 ## Shape
@@ -66,7 +66,7 @@ Prevents: **content-based blocking** and **domain-based blocking**
 
 | Component | Origin | Package / source | Role | Notes |
 | :-------- | :----- | :--------------- | :--- | :---- |
-| Direct TCP and UDP dialers | 🧩 Outline | [transport](https://pkg.go.dev/golang.getoutline.org/sdk/transport) / [stream source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/stream.go), [packet source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/packet.go) | Direct stream and packet dialers | Baseline carry primitives that other components wrap. No circumvention by themselves. |
+| Direct TCP and UDP | 🧩 Outline | [transport](https://pkg.go.dev/golang.getoutline.org/sdk/transport) / [stream source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/stream.go), [packet source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/packet.go) | Direct stream and packet dialers | Baseline carry primitives that other components wrap. No circumvention by themselves. |
 | TLS | 🧩 Outline | [transport/tls](https://pkg.go.dev/golang.getoutline.org/sdk/transport/tls) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/tls) | Connection wrapper, stream dialer | Wraps an inner `transport.StreamConn` with TLS. Supports SNI, ALPN, session cache, and certificate verification options for TLS-wrapped streams. |
 | WebSocket | 🧩 Outline | [x/websocket](https://pkg.go.dev/golang.getoutline.org/sdk/x/websocket) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/websocket) | Stream and packet endpoint | Carries streams or packets over WebSocket messages. Useful where only HTTP/WebSocket paths are allowed. |
 
@@ -76,7 +76,6 @@ Prevents: **content-based blocking** and **domain-based blocking**
 | :-------- | :----- | :--------------- | :--- | :---- |
 | Shadowsocks encryption | 🧩 Outline | [transport/shadowsocks Reader](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks#Reader), [Writer](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks#Writer) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/shadowsocks) | Encrypted stream reader/writer | `NewReader` decrypts Shadowsocks stream data and `NewWriter` encrypts stream data before it is carried over the underlying connection ([spec](https://shadowsocks.org/doc/aead.html)). |
 | LwIP to transport bridge | 🧩 Outline | [network/lwip2transport](https://pkg.go.dev/golang.getoutline.org/sdk/network/lwip2transport) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/network/lwip2transport) | IP packet bridge | Translates IP packets to TCP and UDP handlers backed by Outline transport interfaces. Useful for full-tunnel or packet strategies. |
-| AmneziaWG | 🌐 Community | [amneziawg-go/outline](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline) / [source](https://github.com/amnezia-vpn/amneziawg-go/tree/master/outline) | Packet endpoint adapter | External Outline-compatible adapter for AmneziaWG. Also addresses WireGuard fingerprinting and active probing. Also listed under Relay because VPN services can forward packet traffic beyond the endpoint. |
 
 ## Relay
 
