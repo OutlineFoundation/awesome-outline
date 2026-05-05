@@ -117,7 +117,6 @@ Prevents: **single-strategy failure** across networks, censors, and time.
 | :-------- | :----- | :--------------- | :--- | :---- |
 | Smart Dialer | 🧩 Outline | [x/smart](https://pkg.go.dev/golang.getoutline.org/sdk/x/smart) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/smart) | Strategy finder | Searches DNS and TLS strategies for test domains, then returns a working `transport.StreamDialer`. |
 | Transport URL config | 🧩 Outline | [x/configurl](https://pkg.go.dev/golang.getoutline.org/sdk/x/configurl) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/configurl) | Strategy composer | Parses composable transport strings (e.g. `ss://…`, `tls\|tlsfrag:1`, `doh\|override:host=…`) into a working dialer. Covers strategies from all buckets — Resolve, Shape, Carry, Relay — in a single config language. Custom parsers can be registered to extend the config language with new strategies. Used by all SDK tools. |
-Template parameters can be dynamically replaced.
 
 ## Measure
 
