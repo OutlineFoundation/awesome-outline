@@ -1,27 +1,17 @@
 # Awesome Outline
 
 A curated index of **Outline-compatible censorship-circumvention strategies,
-adapters, and tools** from the Outline team and the broader community.
-
-This repository is an index. It does not host strategy implementations. Listed
-components and tools should live in their authors' own repositories and
-documentation.
-
-Inclusion is not endorsement, certification, or approval by the Outline team.
-The goal is to make compatible components and tools easier to find, compare,
-and choose.
-
-Looking for non-compatible projects that would be useful to adapt, audit, or
-test? See [Wishlist](WISHLIST.md).
+adapters, and tools** from the Outline team and the broader community. This is
+an index — implementations live in their authors' own repositories. Looking for
+projects worth adapting? See [Wishlist](WISHLIST.md).
 
 > **Work in progress.** Structure, categories, fields, and entries are still
-> evolving. Nothing here is final — feedback, corrections, and proposals for a
-> different shape are welcome via issues and pull requests.
+> evolving. Feedback, corrections, and proposals welcome via issues and pull
+> requests.
 
 ## Contents
 
-- [How To Read This List](#how-to-read-this-list)
-- [Core Concepts](#core-concepts)
+- [Core Concepts](CONCEPTS.md)
 - [Resolve](#resolve)
 - [Shape](#shape)
 - [Carry](#carry)
@@ -30,65 +20,6 @@ test? See [Wishlist](WISHLIST.md).
 - [Mobile Proxy Adapters](#mobile-proxy-adapters)
 - [Tools](#tools)
 - [Contributing](#contributing)
-
-## How To Read This List
-
-The index uses five practical capability buckets:
-
-- **Resolve**: turn a name into a usable address or route.
-- **Shape**: make a direct flow survive inspection or interference (a.k.a
-  *proxyless*).
-- **Carry**: move bytes or packets across the censored network to a service.
-- **Relay**: ask a service to reach the final destination (like proxies).
-- **Choose**: select, race, route, and fall back across options.
-
-Each section opens with a `Prevents:` line that names the censorship threats
-the bucket addresses by default. Per-entry threat extensions or caveats live in
-Notes. Threat labels are shorthand for where a component may help; they are
-not guarantees that a strategy works on every network or against every censor.
-
-The five capability sections use the same fields:
-
-| Field | Meaning |
-| :---- | :------ |
-| Component | The Outline strategy, compatible adapter, or compatible tool. |
-| Origin | 🧩 Outline implementation or 🌐 Community adapter/tool. |
-| Package / source | Package docs plus source link when available. |
-| Role | The interface role exposed to applications or other components. |
-| Notes | Compatibility evidence, scope, caveat, or threats addressed beyond the bucket default. |
-
-## Core Concepts
-
-This list uses the composable networking vocabulary from the Outline SDK's
-[interoperable interfaces](https://github.com/OutlineFoundation/outline-sdk#interoperable-and-reusable).
-Components are easiest to reuse when they expose one of these roles.
-
-**Connections** move bytes or packets between two endpoints over an abstract
-transport. [`transport.StreamConn`](https://pkg.go.dev/golang.getoutline.org/sdk/transport#StreamConn)
-is for stream traffic, such as TCP. [`transport.PacketConn`](https://pkg.go.dev/golang.getoutline.org/sdk/transport#PacketConn)
-is for packet or datagram traffic, such as UDP; "packet" follows the Go naming
-convention. Connections can be wrapped, so a stream may be direct TCP, TLS over
-TCP, HTTP over TLS over TCP, QUIC, or another nested stack.
-
-**Endpoints** create connections to a fixed destination while hiding the
-underlying transport details. [`transport.StreamEndpoint`](https://pkg.go.dev/golang.getoutline.org/sdk/transport#StreamEndpoint)
-creates stream connections. [`transport.PacketEndpoint`](https://pkg.go.dev/golang.getoutline.org/sdk/transport#PacketEndpoint)
-creates packet connections. As an analogy, an endpoint is like a reverse proxy:
-the destination is selected by the endpoint, not by each caller.
-
-**Dialers** create connections to caller-provided `host:port` addresses while
-hiding the underlying transport or proxy details. [`transport.StreamDialer`](https://pkg.go.dev/golang.getoutline.org/sdk/transport#StreamDialer)
-creates stream connections. [`transport.PacketDialer`](https://pkg.go.dev/golang.getoutline.org/sdk/transport#PacketDialer)
-creates packet connections. As an analogy, a dialer is like a forward proxy:
-each call chooses the destination. Dialers can also be nested: a
-SOCKS5-over-TLS dialer can use a TLS dialer to reach the proxy, then use SOCKS5
-to reach the target.
-
-**Resolvers** answer DNS questions through a common
-[`dns.Resolver`](https://pkg.go.dev/golang.getoutline.org/sdk/dns#Resolver)
-interface. They are usually used to map domain names to IP addresses, but the
-implementation can use system DNS, encrypted DNS, alternate resolvers, or a
-custom policy.
 
 ## Resolve
 
