@@ -34,8 +34,6 @@ Prevents: **DNS-based blocking**
 | :-------- | :----- | :--------------- | :--- | :---- |
 | Outline DNS resolvers | 🧩 Outline | [dns](https://pkg.go.dev/golang.getoutline.org/sdk/dns) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/dns) | Resolver | Provides `dns.Resolver` plus DNS-over-UDP, DNS-over-TCP, DNS-over-TLS, and DNS-over-HTTPS implementations. |
 | Resolver-backed stream dialer | 🧩 Outline | [dns.NewStreamDialer](https://pkg.go.dev/golang.getoutline.org/sdk/dns#NewStreamDialer) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/dns/stream_dialer.go) | Resolver plus stream dialer | Resolves hostnames with an injected resolver and connects with Happy Eyeballs v2 behavior. |
-| DNS config strings | 🧩 Outline | [x/configurl DNS protection](https://pkg.go.dev/golang.getoutline.org/sdk/x/configurl#hdr-DNS_Protection) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/x/configurl/dns.go) | Config adapter | Supports DNS resolution strategies such as `do53` and `doh` in composable transport strings. |
-| Address override | 🧩 Outline | [x/configurl override](https://pkg.go.dev/golang.getoutline.org/sdk/x/configurl#hdr-DNS_Protection) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/x/configurl/override.go) | Dialer wrapper | Replaces the dialed host and/or port when an app already knows a usable address. Also addresses IP blocking when an alternate address is known. |
 
 ## Shape
 
@@ -106,6 +104,7 @@ Prevents: **single-strategy failure** across networks, censors, and time.
 | Happy Eyeballs stream dialer | 🧩 Outline | [transport.HappyEyeballsStreamDialer](https://pkg.go.dev/golang.getoutline.org/sdk/transport#HappyEyeballsStreamDialer) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/happyeyeballs.go) | Selector and racer | Races resolved addresses with Happy Eyeballs v2 behavior. |
 | Parallel Happy Eyeballs resolver | 🧩 Outline | [transport.NewParallelHappyEyeballsResolveFunc](https://pkg.go.dev/golang.getoutline.org/sdk/transport#NewParallelHappyEyeballsResolveFunc) / [source](https://github.com/OutlineFoundation/outline-sdk/blob/main/transport/happyeyeballs.go) | Resolver racer | Coordinates parallel resolver functions, usually IPv4 and IPv6. |
 | Smart Dialer | 🧩 Outline | [x/smart](https://pkg.go.dev/golang.getoutline.org/sdk/x/smart) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/smart) | Strategy finder | Searches DNS and TLS strategies for test domains, then returns a working `transport.StreamDialer`. |
+| Transport URL config | 🧩 Outline | [x/configurl](https://pkg.go.dev/golang.getoutline.org/sdk/x/configurl) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/configurl) | Strategy composer | Parses composable transport strings (e.g. `ss://…`, `tls\|tlsfrag:1`, `doh\|override:host=…`) into a working dialer. Covers strategies from all buckets — Resolve, Shape, Carry, Relay — in a single config language. Custom parsers can be registered to extend the config language with new strategies. Used by all SDK tools. |
 
 ## Mobile Proxy Adapters
 
