@@ -16,6 +16,7 @@ projects worth adapting? See [Wishlist](WISHLIST.md).
 - [Shape](#shape)
 - [Carry](#carry)
 - [Relay](#relay)
+- [Measure](#measure)
 - [Choose](#choose)
 - [Mobile Proxy Adapters](#mobile-proxy-adapters)
 - [Tools](#tools)
@@ -100,7 +101,6 @@ Prevents: **content-based blocking**, **domain-based blocking**, **IP-based bloc
 | Shadowsocks | 🧩 Outline | [transport/shadowsocks](https://pkg.go.dev/golang.getoutline.org/sdk/transport/shadowsocks) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/transport/shadowsocks) | Stream dialer, packet listener | Implements Shadowsocks secure transport and [proxy](https://shadowsocks.org/doc/what-is-shadowsocks.html) protocols. Compatible with Outline access keys through config strings. |
 | AmneziaWG | 🌐 Community | [amneziawg-go/outline](https://pkg.go.dev/github.com/amnezia-vpn/amneziawg-go/outline) / [source](https://github.com/amnezia-vpn/amneziawg-go/tree/master/outline) | Stream dialer | As a VPN strategy, the service can relay packet traffic beyond the AmneziaWG endpoint. Also addresses WireGuard fingerprinting and active probing. Backward-compatible with WireGuard. |
 | Psiphon  | 🌐 Community | [x/psiphon](https://pkg.go.dev/golang.getoutline.org/sdk/x/psiphon) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/psiphon) | Stream dialer | Uses Psiphon as a `transport.StreamDialer`. Also addresses protocol fingerprinting and active probing. Requires a Psiphon config and the `psiphon` build tag because of licensing. |
-| SOAX proxy client | 🧩 Outline | [x/soax](https://pkg.go.dev/golang.getoutline.org/sdk/x/soax) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/soax) | SOCKS5 client, HTTP CONNECT client | Builds SOCKS5 or HTTP CONNECT proxy clients for SOAX proxy sessions. Also addresses server-reputation blocking via endpoint rotation. |
 | MobileProxy | 🧩 Outline | [x/mobileproxy](https://pkg.go.dev/golang.getoutline.org/sdk/x/mobileproxy) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/mobileproxy) | App integration proxy | Runs a local proxy so mobile apps can route selected traffic through Outline SDK dialers. |
 
 ## Choose
@@ -117,6 +117,21 @@ Prevents: **single-strategy failure** across networks, censors, and time.
 | :-------- | :----- | :--------------- | :--- | :---- |
 | Smart Dialer | 🧩 Outline | [x/smart](https://pkg.go.dev/golang.getoutline.org/sdk/x/smart) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/smart) | Strategy finder | Searches DNS and TLS strategies for test domains, then returns a working `transport.StreamDialer`. |
 | Transport URL config | 🧩 Outline | [x/configurl](https://pkg.go.dev/golang.getoutline.org/sdk/x/configurl) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/configurl) | Strategy composer | Parses composable transport strings (e.g. `ss://…`, `tls\|tlsfrag:1`, `doh\|override:host=…`) into a working dialer. Covers strategies from all buckets — Resolve, Shape, Carry, Relay — in a single config language. Custom parsers can be registered to extend the config language with new strategies. Used by all SDK tools. |
+Template parameters can be dynamically replaced.
+
+## Measure
+
+Gather consistent evidence on path availability, performance, and censor interference to allow for remote measurements across diverse networks.
+
+Main interfaces: Telemetry reporting and endpoint verification hooks.
+
+Prevents: **blind strategy failure** and **invisible quality degradation**
+
+| Component | Origin | Package / source | Role | Notes |
+| :-------- | :----- | :--------------- | :--- | :---- |
+| SOAX proxy client | 🧩 Outline | [x/soax](https://pkg.go.dev/golang.getoutline.org/sdk/x/soax) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/soax) | Measurement adapter | Builds SOCKS5 or HTTP CONNECT proxy clients for SOAX sessions leveraging measurement-driven endpoint rotation to address reputation blocking, allowing for remote measurements across diverse networks. |
+| Outline SDK Connectivity Check Code | 🧩 Outline | [x/connectivity](https://pkg.go.dev/golang.getoutline.org/sdk/x/connectivity) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/connectivity) | Telemetry probe | Baseline library package for checking stream and datagram network reachability and generating diagnostic logs. |
+| Outline SDK Telemetry Reporting Code | 🧩 Outline | [x/report](https://pkg.go.dev/golang.getoutline.org/sdk/x/report) / [source](https://github.com/OutlineFoundation/outline-sdk/tree/main/x/report) | Telemetry logger | Library package providing structural error, performance, and metric event logging to support data-driven selection. |
 
 ## Mobile Proxy Adapters
 
