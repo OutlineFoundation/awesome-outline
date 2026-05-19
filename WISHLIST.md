@@ -13,7 +13,7 @@ Wishlist inclusion is not endorsement and does not imply current Outline compati
 
 ## Resolve
 
-- System resolver - allows querying for any record, including the HTTPS RR for ECH.
+- System resolver - allows querying for any record, including the HTTPS RR for ECH ([draft](https://github.com/OutlineFoundation/outline-sdk/pull/592)).
 
 ## Shape
 
