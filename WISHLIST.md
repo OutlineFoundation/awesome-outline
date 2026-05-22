@@ -17,7 +17,7 @@ Wishlist inclusion is not endorsement and does not imply current Outline compati
 
 ## Shape
 
-- Advanced tlsfrag
+- [Advanced tlsfrag/split/disorder config](https://github.com/OutlineFoundation/outline-apps/discussions/2525)
 - fake (from https://github.com/hufrea/byedpi)
 
 ## Carry
